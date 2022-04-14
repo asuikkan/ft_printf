@@ -22,15 +22,18 @@ static void	fraction_to_str(t_dbl *dbl, char *str, int prec)
 		while (prec--)
 			str[--count] = '0';
 	}
-	while (dbl->frac_final > 0)
+	else
 	{
-		while (prec-- > 15 + dbl->zeroes)
+		while (dbl->frac_final > 0)
+		{
+			while (prec-- > 15 + dbl->zeroes)
+				str[--count] = '0';
+			str[--count] = dbl->frac_final % 10 + '0';
+			dbl->frac_final /= 10;
+		}
+		while (dbl->zeroes-- > 0)
 			str[--count] = '0';
-		str[--count] = dbl->frac_final % 10 + '0';
-		dbl->frac_final /= 10;
 	}
-	while (dbl->zeroes-- > 0)
-		str[--count] = '0';
 }
 
 static void	integer_to_str(t_dbl *dbl, char *str, int prec, int sign)

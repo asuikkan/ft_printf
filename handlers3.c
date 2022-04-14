@@ -53,4 +53,7 @@ void	handle_float(va_list args, t_form *form)
 		form->output = ft_strjoin(temp, ".");
 		ft_strdel(&temp);
 	}
+	if ((form->space_flag == 1 || form->sign_flag == 1)
+		&& form->output[0] != '-')
+		sign_and_space(form);
 }

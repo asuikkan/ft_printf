@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static char	*bits_to_char(char *temp, unsigned char c)
+static void	bits_to_char(char *temp, unsigned char c)
 {
 	int	i;
 	int	j;
@@ -28,7 +28,6 @@ static char	*bits_to_char(char *temp, unsigned char c)
 		else
 			temp[j] = temp[j] + 'a' - 10;
 	}
-	return (temp);
 }
 
 void	save_address(t_form *form)
