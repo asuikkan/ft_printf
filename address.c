@@ -12,17 +12,13 @@
 
 #include "ft_printf.h"
 
-static void	bzero_variables(unsigned char *ptr, char *adr)
-{
-	ft_bzero(ptr, sizeof(ptr));
-	ft_bzero(adr, sizeof(ptr) * 2);
-}
-
-static char	*convert_to_char(char *temp)
+static char	*bits_to_char(char *temp, unsigned char c)
 {
 	int	i;
 	int	j;
 
+	temp[0] = (c >> 4) & 0xf;
+	temp[1] = c & 0xf;
 	i = 2;
 	j = -1;
 	while (++j < 2)
@@ -38,28 +34,27 @@ static char	*convert_to_char(char *temp)
 void	save_address(t_form *form)
 {
 	unsigned char	ptr[sizeof(form->pointer)];
-	char			adr[sizeof(form->pointer) * 2];
 	int				i;
 	int				j;
 	char			temp[2];
 
-	bzero_variables(ptr, adr);
+	ft_bzero(ptr, sizeof(ptr));
 	ft_memcpy(ptr, &form->pointer, sizeof(form->pointer));
-	i = sizeof(form->pointer);
-	j = 0;
-	while (--i >= 0)
-	{
-		while (ptr[i] == '\0')
-			i--;
-		temp[0] = (ptr[i] >> 4) & 0xf;
-		temp[1] = ptr[i] & 0xf;
-		convert_to_char(temp);
-		adr[j++] = temp[0];
-		adr[j++] = temp[1];
-	}
 	form->output = ft_strnew((sizeof(form->pointer) * 2) + 2);
 	if (form->output == NULL)
-		return ;
+		exit(1);
 	ft_memcpy(form->output, "0x", 2);
-	ft_memcpy(form->output + 2, adr, sizeof(adr));
+	i = sizeof(form->pointer);
+	j = 2;
+	while (--i >= 0)
+	{
+		while (i > 0 && ptr[i] == '\0')
+			i--;
+		bits_to_char(temp, ptr[i]);
+		if (temp[0] == '0' && j == 2)
+			;
+		else
+			form->output[j++] = temp[0];
+		form->output[j++] = temp[1];
+	}
 }
