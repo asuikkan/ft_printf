@@ -22,7 +22,6 @@
 # define ARR_SIZE			127
 
 /* For handling floats */
-# define SIXTY_FOURTH_BIT	0x8000000000000000
 # define FIFTY_TWO_BITS		0xFFFFFFFFFFFFF
 # define FIFTY_THREE_BITS	0x1FFFFFFFFFFFFF
 # define ELEVEN_BITS		0x7FF
@@ -70,19 +69,9 @@ typedef struct s_dbl
 
 int		ft_printf(const char *format, ...);
 void	print_output(t_form *form);
-int		pf_toupper(int c);
-int		pf_isdigit(int c);
 char	*ft_anyitoa(unsigned long long nb, int base, int sign);
 char	*ft_ftoa(double nb, int prec);
 char	*form_str(t_dbl *dbl, int prec, int sign);
-char	*pf_strdup(const char *src);
-char	*pf_strjoin(const char *s1, const char *s2);
-char	*pf_strcat(char *dest, const char *src);
-char	*pf_strnew(size_t size);
-size_t	pf_strlen(const char *str);
-size_t	pf_count_digits(long long nb);
-void	pf_strdel(char **as);
-void	pf_bzero(void *s, size_t n);
 void	add_precision(t_form *form);
 void	add_octal_form(t_form *form_str);
 void	add_hex_form(t_form *form);
@@ -110,8 +99,5 @@ void	handle_chex(va_list args, t_form *form);
 void	handle_char(va_list args, t_form *form);
 void	handle_str(va_list args, t_form *form);
 void	handle_adr(va_list args, t_form *form);
-void	*pf_memmove(void *dest, const void *src, size_t n);
-void	*pf_memcpy(void *dest, const void *src, size_t n);
-void	*pf_memset(void *str, int c, size_t n);
 
 #endif
