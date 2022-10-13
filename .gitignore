@@ -1,6 +1,0 @@
-.DS_Store
-printf
-.vscode
-printf.dSYM
-cn_tests
-main_test.c
